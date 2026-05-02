@@ -1,25 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>AI Organizer</title>
-  <style>
-    body { font-family: Arial; text-align: center; padding: 30px; }
-    img { max-width: 300px; margin-top: 20px; }
-    button { padding: 10px 20px; margin-top: 10px; }
-    #output { margin-top: 20px; white-space: pre-wrap; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Organizer</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: white;
+  text-align: center;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  padding: 40px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+p {
+  color: #cbd5e1;
+}
+
+.card {
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+input {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  width: 100%;
+  background: #111827;
+  color: white;
+}
+
+button {
+  margin-top: 15px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #3b82f6;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #2563eb;
+}
+
+img {
+  margin-top: 20px;
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+#output {
+  margin-top: 20px;
+  text-align: left;
+  white-space: pre-wrap;
+  background: rgba(255,255,255,0.05);
+  padding: 15px;
+  border-radius: 10px;
+}
+</style>
+
 </head>
+
 <body>
 
-<h1>AI Image Organizer 📦</h1>
+<div class="container">
+  <h1>🧠 AI Organizer</h1>
+  <p>Upload a picture and get step-by-step organization instructions</p>
 
-<input type="file" id="imageInput" accept="image/*">
-<br>
-<button onclick="analyzeImage()">Analyze</button>
+  <div class="card">
+    <input type="file" id="imageInput" accept="image/*">
+    <button onclick="analyzeImage()">Analyze Image</button>
 
-<br>
-<img id="preview">
-<div id="output"></div>
+    <img id="preview">
+    <div id="output">Waiting for image...</div>
+  </div>
+</div>
 
 <script>
 let base64Image = "";
@@ -37,7 +112,7 @@ document.getElementById("imageInput").addEventListener("change", function(event)
 });
 
 async function analyzeImage() {
-  document.getElementById("output").innerText = "Analyzing...";
+  document.getElementById("output").innerText = "Analyzing image...";
 
   const res = await fetch("https://YOUR-BACKEND-URL/analyze", {
     method: "POST",
