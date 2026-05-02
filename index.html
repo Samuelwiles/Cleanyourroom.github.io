@@ -1,21 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My First Website</title>
+  <title>AI Organizer</title>
   <style>
-    body {
-      font-family: Arial;
-      text-align: center;
-      background: #f2f2f2;
-      padding: 50px;
-    }
-    h1 {
-      color: #333;
-    }
+    body { font-family: Arial; text-align: center; padding: 30px; }
+    img { max-width: 300px; margin-top: 20px; }
+    button { padding: 10px 20px; margin-top: 10px; }
+    #output { margin-top: 20px; white-space: pre-wrap; }
   </style>
 </head>
 <body>
-  <h1>Welcome to My Website 🚀</h1>
-  <p>This site is hosted for free using GitHub Pages.</p>
+
+<h1>AI Image Organizer 📦</h1>
+
+<input type="file" id="imageInput" accept="image/*">
+<br>
+<button onclick="analyzeImage()">Analyze</button>
+
+<br>
+<img id="preview">
+<div id="output"></div>
+
+<script>
+let base64Image = "";
+
+document.getElementById("imageInput").addEventListener("change", function(event) {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+    base64Image = e.target.result;
+    document.getElementById("preview").src = base64Image;
+  };
+
+  reader.readAsDataURL(file);
+});
+
+async function analyzeImage() {
+  document.getElementById("output").innerText = "Analyzing...";
+
+  const res = await fetch("https://YOUR-BACKEND-URL/analyze", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ image: base64Image })
+  });
+
+  const data = await res.json();
+  document.getElementById("output").innerText = data.result;
+}
+</script>
+
 </body>
 </html>
